@@ -29,7 +29,6 @@ for message in messages:
     sendFileName.append(books[message])
     reveiveFileName.append("../received_files/tcp/"+books[message].split("/")[-1][:-4] + "_TCP"+ "_" + str(os.getpid())+".txt")
 
-connectionstart = time()
 #Creating client socket
 clientSocket = socket(AF_INET,SOCK_STREAM)
 
@@ -45,10 +44,6 @@ clientSocket.connect(ADDRESS) # 3 whay handshake's first handshake,i.e connectio
 
 # Sending the server, name of the book
 # clientSocket.send(str(len(sendFileName)).encode())
-connectionsetup = time()
-
-print("connection setup time : {} seconds".format (connectionsetup - connectionstart))
-total_file_size = 0
 
 for count in range(len(sendFileName)):
     start = time()
@@ -61,22 +56,19 @@ for count in range(len(sendFileName)):
 
     with open(reveiveFileName[count], "wb") as f:
         print("file opened")
-        while(True):
-            chunk = clientSocket.recv(BUFSIZE) # receiving the file in chunks of buffer size
-            if not chunk or chunk == b'EOF':
-                break 
-            f.write(chunk)                     # Writing the chunk to the file
-            clientSocket.send(b'ack')
+        try:
+            while(True):
+                chunk = clientSocket.recv(BUFSIZE) # receiving the file in chunks of buffer size
+                if not chunk or chunk == b'EOF':
+                    break 
+                f.write(chunk)                     # Writing the chunk to the file
+                clientSocket.send(b'ack')
+        except:
+            print("An exception occured")
     f.close()
     end = time()
     
     print("File received Successfully, closing the connection ...")
     print("Time Elapsed : {} seconds".format (end - start))
-    file_size = (os.stat(sendFileName[count])).st_size
-    total_file_size = total_file_size+file_size
-    print("Througput is: {} bytes/sec".format((file_size)/(end-start)))
+    print("Througput is: {} bytes/sec".format((os.stat(sendFileName[count]).st_size)/(end-start)))
 clientSocket.close() #closing the connection
-
-overallend = time()
-print("overall Time Elapsed : {} seconds".format (overallend - connectionstart))
-print("overall Througput is: {} bytes/sec".format((total_file_size)/(overallend-connectionstart)))

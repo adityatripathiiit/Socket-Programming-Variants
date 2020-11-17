@@ -3,8 +3,11 @@ import os
 from time import time 
 import sys 
 
+message = sys.argv[1]
+hostIP = sys.argv[2]
+
 BUFSIZE = 1024                     # Buffer size
-serverName = "127.0.0.1"           # Server IP(localhost)
+serverName = hostIP           # Server IP(localhost)
 serverPort = 12345                 # Server Port number
 ADDRESS = (serverName, serverPort) # forming tuple of server IP and port
 
@@ -15,8 +18,6 @@ print("2: Roget's Thesaurus")
 print("3: The 1991 CIA World Factbook")
 print("4: The Conquest Of Peru")
 print("5: War and Peace")
-
-message = sys.argv[1]
 
 if(message not in books.keys()):
     print("Please choose a valid book number") 

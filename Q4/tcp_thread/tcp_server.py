@@ -64,7 +64,7 @@ class workerThreads(Thread):
         clientSocket.close()
         exit()
 
-
+threadPool= []
 threadCount = 0
 while True:
     print("Listening ...")
@@ -74,10 +74,10 @@ while True:
     
     newConnectionThread = workerThreads(clientSocket,threadCount)
     newConnectionThread.start()
-    # threadPool.append(newConnectionThread)
+    threadPool.append(newConnectionThread)
     threadCount +=1
-    if (threadCount == 5):
+    if (threadCount == 4):
         break 
 
-# for thread in threadPool:
-#     thread.join()
+for thread in threadPool:
+    thread.join()

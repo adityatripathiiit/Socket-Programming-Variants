@@ -16,11 +16,18 @@ print("3: The 1991 CIA World Factbook")
 print("4: The Conquest Of Peru")
 print("5: War and Peace")
 
-message = sys.argv[1]
+messages = list(input("Enter the book Numbers seperated by space: ").split())
 
-if(message not in books.keys()):
-    print("Please choose a valid book number") 
-    exit()
+for message in messages:
+    if (message not in books.keys()):
+        print("Please choose a valid book number") 
+        sys.exit()
+
+sendFileName = []
+reveiveFileName= []
+for message in messages:
+    sendFileName.append(books[message])
+    reveiveFileName.append("../received_files/tcp/"+books[message].split("/")[-1][:-4] + "_TCP"+ "_" + str(os.getpid())+".txt")
 
 #Creating client socket
 clientSocket = socket(AF_INET,SOCK_STREAM)
@@ -32,30 +39,33 @@ clientSocket = socket(AF_INET,SOCK_STREAM)
 # clientSocket.setsockopt(IPPROTO_TCP, TCP_QUICKACK, True)
 
 #starting the timer
-start = time()
+
 clientSocket.connect(ADDRESS) # 3 whay handshake's first handshake,i.e connection setup 
 
 # Sending the server, name of the book
-clientSocket.send(books[message].encode())
-recvACK = clientSocket.recv(100)
+# clientSocket.send(str(len(sendFileName)).encode())
 
-clientSocket.send(b'ack')
+for count in range(len(sendFileName)):
+    start = time()
+    
+    clientSocket.send(sendFileName[count].encode())
 
-fileName = "../received_files/tcp/"+books[message].split("/")[-1][:-4] + "_TCP"+ "_" + str(os.getpid())+".txt"
-with open(fileName, "wb") as f:
-    print("file opened") 
-    try:
+    recvACK = clientSocket.recv(100)
+
+    clientSocket.send(b'ack')
+
+    with open(reveiveFileName[count], "wb") as f:
+        print("file opened")
         while(True):
             chunk = clientSocket.recv(BUFSIZE) # receiving the file in chunks of buffer size
             if not chunk or chunk == b'EOF':
                 break 
             f.write(chunk)                     # Writing the chunk to the file
             clientSocket.send(b'ack')
-    except:
-        print("An exception occured")
-f.close()
+    f.close()
+    end = time()
+    
+    print("File received Successfully, closing the connection ...")
+    print("Time Elapsed : {} seconds".format (end - start))
+    print("Througput is: {} bytes/sec".format((os.stat(sendFileName[count]).st_size)/(end-start)))
 clientSocket.close() #closing the connection
-end = time()
-print("File received Successfully, closing the connection ...")
-print("Time Elapsed : {} seconds".format (end - start))
-print("Througput is: {} bytes/sec".format((os.stat(books[message]).st_size)/(end-start)))

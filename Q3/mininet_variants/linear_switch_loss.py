@@ -33,7 +33,7 @@ class LinearTestTopo( Topo ):
 def main(loss):
     lg.setLogLevel( 'info')
     topo = LinearTestTopo(2)
-    link = partial( TCLink, loss=loss, bw=10)
+    link = partial( TCLink, loss=loss, bw=1000)
     net = Mininet(topo=topo, link=link)
     net.start()
 
