@@ -51,6 +51,7 @@ def main(loss):
     net.stop()
 
 if __name__ == '__main__':
+    # 1 %, 2 % and 5% loss respectively for each iteration 
     losses = [1,2,5]
     for loss in losses:
         main(loss)

@@ -33,18 +33,9 @@ connectionstart = time()
 #Creating client socket
 clientSocket = socket(AF_INET,SOCK_STREAM)
 
-# uncomment the next line to disable Nagle's algorithm 
-# clientSocket.setsockopt(IPPROTO_TCP, TCP_NODELAY, True)
-
-# uncomment the next line to disable Delayed ACK  
-# clientSocket.setsockopt(IPPROTO_TCP, TCP_QUICKACK, True)
-
-#starting the timer
 
 clientSocket.connect(ADDRESS) # 3 whay handshake's first handshake,i.e connection setup 
 
-# Sending the server, name of the book
-# clientSocket.send(str(len(sendFileName)).encode())
 connectionsetup = time()
 
 print("connection setup time : {} seconds".format (connectionsetup - connectionstart))
@@ -52,21 +43,22 @@ total_file_size = 0
 
 for count in range(len(sendFileName)):
     start = time()
-    
+    #sending the corresponding file name 
     clientSocket.send(sendFileName[count].encode())
-
-    recvACK = clientSocket.recv(100)
-
+    # Receiving ACK for the sent packet
+    recvACK = clientSocket.recv(100)                
+    # Sending ACK to the server
     clientSocket.send(b'ack')
 
     with open(reveiveFileName[count], "wb") as f:
         print("file opened")
         while(True):
             chunk = clientSocket.recv(BUFSIZE) # receiving the file in chunks of buffer size
-            if not chunk or chunk == b'EOF':
+            if not chunk or chunk == b'EOF':   # If the EOF received then end the file transfer
                 break 
             f.write(chunk)                     # Writing the chunk to the file
-            clientSocket.send(b'ack')
+            clientSocket.send(b'ack')          # seniding ACK to the server after receiving the chunk, marking
+                                               # that it is available for receiving other chunks
     f.close()
     end = time()
     

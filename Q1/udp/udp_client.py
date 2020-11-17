@@ -28,12 +28,15 @@ for message in messages:
 
 sendFileName = []
 reveiveFileName= []
+total_file_size = 0
 for message in messages:
     sendFileName.append(books[message])
     reveiveFileName.append("../received_files/udp/"+books[message].split("/")[-1][:-4] + "_UDP"+ "_" + str(os.getpid())+".txt")
 
+connectionstart = time()
 # Creating the socket
 clientSocket = socket(AF_INET,SOCK_DGRAM)
+
 
 for count in range(len(sendFileName)):
     #starting the timer 
@@ -41,6 +44,7 @@ for count in range(len(sendFileName)):
     #Sending bookname to the server
 
     recvACK = b''
+    # Corresponding logic for the server counter part, kindly look at server comments
     while(recvACK != b'fname'):
         clientSocket.sendto(sendFileName[count].encode(),ADDRESS) 
         recvACK,ADDRESS = clientSocket.recvfrom(100)
@@ -51,23 +55,25 @@ for count in range(len(sendFileName)):
         
         while(True):
             # print("Receiving data ...")
-            try:
-                # clientSocket.settimeout(2)                 #starting the time for timeout
-                chunk,ADDRESS = clientSocket.recvfrom(BUFSIZE) # Receiving the data in chunks of buffer size
-                # print(ADDRESS)
-                if not chunk or chunk == b'EOF':
-                    clientSocket.sendto(b'eofdone',ADDRESS) 
-                    break
-                        
-                f.write(chunk)
-                clientSocket.sendto(b'ack',ADDRESS)
-            except timeout:
-                print('time out')
-                break
             
+            # clientSocket.settimeout(2)                 #starting the time for timeout
+            chunk,ADDRESS = clientSocket.recvfrom(BUFSIZE) # Receiving the data in chunks of buffer size
+            # print(ADDRESS)
+            if not chunk or chunk == b'EOF':
+                clientSocket.sendto(b'eofdone',ADDRESS) 
+                break
+                    
+            f.write(chunk)
+            clientSocket.sendto(b'ack',ADDRESS)
 
         # If timout occurs
-    print("File received Successfully, closing the connection ...")
     end = time()
+    print("File received Successfully,...")
     print("Time Elapsed : {} seconds".format (end - start))
+    file_size = (os.stat(sendFileName[count])).st_size
+    total_file_size = total_file_size+file_size
+    print("Througput is: {} bytes/sec".format((file_size)/(end-start)))
 clientSocket.close()    
+overallend = time()
+print("overall Time Elapsed : {} seconds".format (overallend - connectionstart))
+print("overall Througput is: {} bytes/sec".format((total_file_size)/(overallend-connectionstart)))

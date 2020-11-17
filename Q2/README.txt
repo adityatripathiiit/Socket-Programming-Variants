@@ -2,7 +2,7 @@
 The folder structure is as follows: 
 
 .
-└── TCP_UDP_File_Transfer/
+└── Q2/
     ├── novels/
     │   ├── Heartsease.txt
     │   ├── Roget’s Thesaurus.txt
@@ -14,12 +14,16 @@ The folder structure is as follows:
     │   │   └── tcpfiles
     │   └── udp/
     │       └── udpfiles
-    ├── tcp/
-    │   ├── tcp_client.py
+    ├── tcp_fork/
+    │   ├── client_run.sh
+    │   ├── tcp_client_non_persistent.py.py
+    │   ├── tcp_client_persistent.py.py
     │   └── tcp_server.py
-    ├── udp/
-    │   ├── udp_client.py
-    │   └── udp_server.py
+    ├── tcp_thread/
+    │   ├── client_run.sh
+    │   ├── tcp_client_non_persistent.py.py
+    │   ├── tcp_client_persistent.py.py
+    │   └── tcp_server.py
     └── README.txt
     
 
@@ -27,26 +31,8 @@ The folder structure is as follows:
 
 To run the TCP server, go to the tcp folder and run the command python3 tcp_server.py
 
-To run the TCP client, go to the tcp folder and run the command python3 tcp_client.py. This will give the user options to send specific files. Those files can be selected and send. 
+To run all the clients concurrently, run the script client_run.sh, use the command "sudo sh ./client_run.sh" to run the client. 
+
+Otherwise, just as previous instructions, run any python file and provide the input as required. 
 
 
-The same instructions goes for the UDP client and UDP server. 
-
-To disable nagle's algorithm in TCP server uncomment line 21  in tcp_sever.py.
-
-
-To disable nagle's algorithm in TCP client uncomment line 29 in tcp_client.py.
-
-
-To disable delayed ACK in TCP server uncomment line 24 in tcp_server.py
-
-
-To disable delayed ACK in TCP client uncomment line 32 in tcp_client.py
-
-
-Buffersize can be changed in clients and servers of both tcp and udp, by changing the global variable BUFSIZE. 
-
-
-To add sleep of 100 us in TCP server uncomment line 48 in tcp_server.py
-
-To add sleep of 100 us in UDP server uncomment line 29 in udp_server.py

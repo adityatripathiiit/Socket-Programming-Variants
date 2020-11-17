@@ -25,20 +25,15 @@ if(message not in books.keys()):
 #Creating client socket
 clientSocket = socket(AF_INET,SOCK_STREAM)
 
-# uncomment the next line to disable Nagle's algorithm 
-# clientSocket.setsockopt(IPPROTO_TCP, TCP_NODELAY, True)
-
-# uncomment the next line to disable Delayed ACK  
-# clientSocket.setsockopt(IPPROTO_TCP, TCP_QUICKACK, True)
-
 #starting the timer
 start = time()
 clientSocket.connect(ADDRESS) # 3 whay handshake's first handshake,i.e connection setup 
 
 # Sending the server, name of the book
 clientSocket.send(books[message].encode())
-recvACK = clientSocket.recv(100)
-
+# Receiving ACK for the sent packet
+recvACK = clientSocket.recv(100)                
+# Sending ACK to the server
 clientSocket.send(b'ack')
 
 fileName = "../received_files/tcp/"+books[message].split("/")[-1][:-4] + "_TCP"+ "_" + str(os.getpid())+".txt"
@@ -47,10 +42,11 @@ with open(fileName, "wb") as f:
     try:
         while(True):
             chunk = clientSocket.recv(BUFSIZE) # receiving the file in chunks of buffer size
-            if not chunk or chunk == b'EOF':
+            if not chunk or chunk == b'EOF':   # If the EOF received then end the file transfer
                 break 
             f.write(chunk)                     # Writing the chunk to the file
-            clientSocket.send(b'ack')
+            clientSocket.send(b'ack')          # seniding ACK to the server after receiving the chunk, marking
+                                               # that it is available for receiving other chunks
     except:
         print("An exception occured")
 f.close()

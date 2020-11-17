@@ -31,25 +31,25 @@ class LinearTestTopo( Topo ):
 
 def main(hop):
     lg.setLogLevel( 'info')
-    topo = LinearTestTopo(hop)
-    link = partial( TCLink, bw=1000)
-    net = Mininet(topo=topo,link=link)
-    net.start()
+    topo = LinearTestTopo(hop)                                                       # Creating a custom linear topology with required hops
+    link = partial( TCLink, bw=1000)                                                 # Setting the bandwidth of the link       
+    net = Mininet(topo=topo,link)                                                    # Creating the network=link                                                                      
+    
+    net.start()                                                                      # Starting the network 
 
-    h1 = net.get('h1')
-    h2 = net.get('h2')
+    h1 = net.get('h1')                                                               # Getting host h1
+    h2 = net.get('h2')                                                               # Getting host h2
 
-    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())
+    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())              # Starting the server                 
     print("Starting transfer for hop: ",hop)
 
-    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP()))
-
-
-    # CLI(net)
-    p1.terminate()
-    net.stop()
+    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP())) # starting the client
+    
+    p1.terminate()                                                                    # Terminating the server
+    net.stop()                                                                        # Stopping the network
 
 if __name__ == '__main__':
+    # 2 hops, 4 hops, 6 hops, 8 hops and 10 hops respectively for each iteration 
     hops = [2,4,6,8,10]
     for hop in hops:
         main(hop)

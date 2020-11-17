@@ -32,26 +32,26 @@ class LinearTestTopo( Topo ):
 
 def main(bandwidth):
     lg.setLogLevel( 'info')
-    topo = LinearTestTopo(2)
-    link = partial( TCLink, bw=bandwidth)
-    net = Mininet(topo=topo, link=link)
-    net.start()
+    topo = LinearTestTopo(2)                                                          # Creating a custom linear topology as required
+    link = partial( TCLink, bw=bandwidth)                                             # Setting the bandwidth of the link       
+    net = Mininet(topo=topo, link=link)                                               # Creating the network
+    net.start()                                                                       # Starting the network 
 
-    h1 = net.get('h1')
-    h2 = net.get('h2')
+    h1 = net.get('h1')                                                                # Getting host h1
+    h2 = net.get('h2')                                                                # Getting host h2
+ 
+    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())               # Starting the server 
+    print("Starting transfer for bandwidth: ", bandwidth)                               
 
-    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())
-    print("Starting transfer for bandwidth: ", bandwidth)
+    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP())) # starting the client
 
-    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP()))
-
-
-    # CLI(net)
-    p1.terminate()
-    net.stop()
+ 
+    p1.terminate()                                                                    # Terminating the server
+    net.stop()                                                                        # Stopping the network
 
 if __name__ == '__main__':
-    bandwidths = [10,100,1000]
+    #10 Mbps, 100 Mbps, 1000Mbps bandwidths respectively for each iteration 
+    bandwidths = [10,100,1000]  
     for bandwidth in bandwidths:
         main(bandwidth)
     

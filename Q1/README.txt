@@ -2,7 +2,7 @@
 The folder structure is as follows: 
 
 .
-└── TCP_UDP_File_Transfer/
+└── Q1/
     ├── novels/
     │   ├── Heartsease.txt
     │   ├── Roget’s Thesaurus.txt
@@ -27,26 +27,9 @@ The folder structure is as follows:
 
 To run the TCP server, go to the tcp folder and run the command python3 tcp_server.py
 
-To run the TCP client, go to the tcp folder and run the command python3 tcp_client.py. This will give the user options to send specific files. Those files can be selected and send. 
+To run the TCP client, go to the tcp folder and run the command python3 tcp_client.py. This will give the user options to send specific files. Those files can be selected and send.  
+Enter the number of files required as a string seperated by a space. For example, if clients wants book number 1,2 and 4 then provide 1 2 4 as an input. For all the files, provide 1 2 3 4 5 as input. 
 
 
 The same instructions goes for the UDP client and UDP server. 
 
-To disable nagle's algorithm in TCP server uncomment line 21  in tcp_sever.py.
-
-
-To disable nagle's algorithm in TCP client uncomment line 29 in tcp_client.py.
-
-
-To disable delayed ACK in TCP server uncomment line 24 in tcp_server.py
-
-
-To disable delayed ACK in TCP client uncomment line 32 in tcp_client.py
-
-
-Buffersize can be changed in clients and servers of both tcp and udp, by changing the global variable BUFSIZE. 
-
-
-To add sleep of 100 us in TCP server uncomment line 48 in tcp_server.py
-
-To add sleep of 100 us in UDP server uncomment line 29 in udp_server.py

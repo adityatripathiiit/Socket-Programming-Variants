@@ -2,7 +2,14 @@
 The folder structure is as follows: 
 
 .
-└── TCP_UDP_File_Transfer/
+└── Q3/
+    ├── mininet_variants/
+    │   ├── linear_switch_bandwidth.py  (Q3 part g)
+    │   ├── linear_switch_delay.py      (Q3 part h)
+    │   ├── linear_switch_hops.py       (Q3 part j)
+    │   ├── linear_switch_loss.py       (Q3 part i)
+    │   └── single_switch_diff_file.py  (Q3 part e)
+    │   └── single_switch_same_file.py  (Q3 part f)
     ├── novels/
     │   ├── Heartsease.txt
     │   ├── Roget’s Thesaurus.txt
@@ -14,39 +21,26 @@ The folder structure is as follows:
     │   │   └── tcpfiles
     │   └── udp/
     │       └── udpfiles
-    ├── tcp/
-    │   ├── tcp_client.py
+    ├── tcp_fork/
+    │   ├── tcp_client_non_persistent.py.py
+    │   ├── tcp_client_persistent.py.py
     │   └── tcp_server.py
-    ├── udp/
-    │   ├── udp_client.py
-    │   └── udp_server.py
+    ├── tcp_thread/
+    │   ├── tcp_client_non_persistent.py.py
+    │   ├── tcp_client_persistent.py.py
+    │   └── tcp_server.py
     └── README.txt
     
 
 
 
-To run the TCP server, go to the tcp folder and run the command python3 tcp_server.py
+All the code for this question is in the directory, mininet_variants: 
 
-To run the TCP client, go to the tcp folder and run the command python3 tcp_client.py. This will give the user options to send specific files. Those files can be selected and send. 
-
-
-The same instructions goes for the UDP client and UDP server. 
-
-To disable nagle's algorithm in TCP server uncomment line 21  in tcp_sever.py.
+To run any part just type the command  "sudo python3 [file_name in mininet_variants directory]" 
 
 
-To disable nagle's algorithm in TCP client uncomment line 29 in tcp_client.py.
+This will do all the tasks as asked in the corresponding question 
+The file names are kept as per the question's part heading.
 
 
-To disable delayed ACK in TCP server uncomment line 24 in tcp_server.py
 
-
-To disable delayed ACK in TCP client uncomment line 32 in tcp_client.py
-
-
-Buffersize can be changed in clients and servers of both tcp and udp, by changing the global variable BUFSIZE. 
-
-
-To add sleep of 100 us in TCP server uncomment line 48 in tcp_server.py
-
-To add sleep of 100 us in UDP server uncomment line 29 in udp_server.py

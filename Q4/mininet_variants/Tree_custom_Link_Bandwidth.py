@@ -44,11 +44,11 @@ class TreeCustomTopo( Topo ):
 
 def main():
     lg.setLogLevel( 'info')
-    topo = TreeCustomTopo()
-    net = Mininet(topo=topo)
+    topo = TreeCustomTopo()                   # Creating the given custom topology 
+    net = Mininet(topo=topo) 
     net.start()
     
-    
+    #uncomment the required hosts 
     S = net.get('S')
     H = net.get('H')
     I = net.get('I')
@@ -65,6 +65,7 @@ def main():
     p1 = S.popen('python3 ../tcp_thread/tcp_server.py %s & ' %S.IP())
     popens[S] = p1
 
+    # Ucomment the required command
     print(H.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 1 %s |& tee -a output.log &' %S.IP()))
     print(I.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 2 %s |& tee -a output.log &' %S.IP()))
     print(J.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 3 %s |& tee -a output.log &' %S.IP()))

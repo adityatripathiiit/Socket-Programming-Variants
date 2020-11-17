@@ -32,25 +32,24 @@ class LinearTestTopo( Topo ):
 
 def main(delay):
     lg.setLogLevel( 'info')
-    topo = LinearTestTopo(2)
-    link = partial( TCLink, delay=delay, bw=1000)
-    net = Mininet(topo=topo, link=link)
-    net.start()
+    topo = LinearTestTopo(2)                                                          # Creating a custom linear topology as required
+    link = partial( TCLink, delay=delay, bw=1000)                                     # Setting the bandwidth and delay of the link
+    net = Mininet(topo=topo, link=link)                                               # Creating the network
+    net.start()                                                                       # Starting the network 
 
-    h1 = net.get('h1')
-    h2 = net.get('h2')
+    h1 = net.get('h1')                                                                # Getting host h1
+    h2 = net.get('h2')                                                                # Getting host h2
 
-    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())
-    print("Starting transfer for delay: ",delay)
+    p1 = h1.popen('python3 ../tcp_thread/tcp_server.py %s & ' %h1.IP())               # Starting the server 
+    print("Starting transfer for delay: ",delay)                               
 
-    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP()))
+    print(h2.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 5 %s' %h1.IP())) # starting the client
 
-
-    # CLI(net)
-    p1.terminate()
-    net.stop()
+    p1.terminate()                                                                    # Terminating the server
+    net.stop()                                                                        # Stopping the network
 
 if __name__ == '__main__':
+    #1 ms, 2 ms, 5 ms and 10 ms delay respectively for each iteration 
     delays = [1,2,5,10]
     for delay in delays:
         main(delay)
