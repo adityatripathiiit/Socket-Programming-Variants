@@ -61,9 +61,9 @@ def main():
 
     
 
-    popens = {}
+    # popens = {}
     p1 = S.popen('python3 ../tcp_thread/tcp_server.py %s & ' %S.IP())
-    popens[S] = p1
+    # popens[S] = p1
 
     # Ucomment the required command
     print(H.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 1 %s |& tee -a output.log &' %S.IP()))
@@ -75,11 +75,11 @@ def main():
     # print(N.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 4 %s |& tee -a output.log &' %S.IP()))
     # print(O.cmd('python3 ../tcp_thread/tcp_client_non_persistent.py 4 %s |& tee -a output.log &' %S.IP()))
 
-    for host, line in pmonitor( popens ):
-        if(host):
-            info( "<%s>: %s" % ( host.name, line ) )
+    # for host, line in pmonitor( popens ):
+    #     if(host):
+    #         info( "<%s>: %s" % ( host.name, line ) )
     
-    sleep(1)
+    sleep(5)
     S.cmd('chmod 777 output.log')
     with open('output.log', 'r') as fin:
         print(fin.read())

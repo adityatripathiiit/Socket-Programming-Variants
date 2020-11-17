@@ -34,8 +34,8 @@ def main():
     #     if(host):
     #         info( "<%s>: %s" % ( host.name, line ) )
     
-    p1.terminate()
     sleep(5)
+    p1.terminate()
 
     # To read the output of a process in the background
     h6.cmd('chmod 777 output.log')

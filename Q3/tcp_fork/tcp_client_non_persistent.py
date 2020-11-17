@@ -3,10 +3,14 @@ import os
 from time import time 
 import sys 
 
+message = sys.argv[1]
+hostIP = sys.argv[2]
+
 BUFSIZE = 1024                     # Buffer size
-serverName = "127.0.0.1"           # Server IP(localhost)
+serverName = hostIP           # Server IP(localhost)
 serverPort = 12345                 # Server Port number
 ADDRESS = (serverName, serverPort) # forming tuple of server IP and port
+
 
 books = {"1": "../novels/Heartsease.txt", "2": "../novels/Roget’s Thesaurus.txt", "3": "../novels/The 1991 CIA World Factbook.txt", "4":"../novels/The Conquest Of Peru.txt", "5": "../novels/War and Peace.txt"}
 print("Select the book you want to request from the server, from the following list of books: ")
@@ -16,7 +20,6 @@ print("3: The 1991 CIA World Factbook")
 print("4: The Conquest Of Peru")
 print("5: War and Peace")
 
-message = sys.argv[1]
 
 if(message not in books.keys()):
     print("Please choose a valid book number") 

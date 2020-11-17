@@ -4,10 +4,11 @@ import os
 from time import time,sleep
 import sys
 
+hostIP = sys.argv[1]
 
 serverPort = 12345      # Server IP(localhost)
 BUFSIZE = 1024          # Buffer size     
-HOST = ""               
+HOST = hostIP
 
 ADDRESS = (HOST,serverPort)
 

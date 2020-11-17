@@ -33,7 +33,7 @@ def main(hop):
     lg.setLogLevel( 'info')
     topo = LinearTestTopo(hop)                                                       # Creating a custom linear topology with required hops
     link = partial( TCLink, bw=1000)                                                 # Setting the bandwidth of the link       
-    net = Mininet(topo=topo,link)                                                    # Creating the network=link                                                                      
+    net = Mininet(topo=topo,link=link)                                               # Creating the network
     
     net.start()                                                                      # Starting the network 
 
