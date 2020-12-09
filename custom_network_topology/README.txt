@@ -2,7 +2,7 @@
 The folder structure is as follows: 
 
 .
-└── Q4/
+└── custom_network_topology/
     ├── mininet_variants/
     │   ├── Tree_custom_Link_Bandwidth.py    (Q4 part k)
     │   ├── Tree_custom_Link_Scaling_Load.py (Q4 part l)
@@ -31,13 +31,11 @@ The folder structure is as follows:
 
 
 
-All the code for this question is in the directory, mininet_variants: 
+All the code for this is in the directory, mininet_variants: 
 
 To run any part just type the command  "sudo python3 [file_name in mininet_variants directory]" 
 
 
-This will do all the tasks as asked in the corresponding question 
-The file names are kept as per the question's part heading.
 
 
 

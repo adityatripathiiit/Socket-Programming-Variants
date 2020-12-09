@@ -2,7 +2,7 @@
 The folder structure is as follows: 
 
 .
-└── Q1/
+└── persistent_connection/
     ├── novels/
     │   ├── Heartsease.txt
     │   ├── Roget’s Thesaurus.txt

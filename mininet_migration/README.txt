@@ -2,7 +2,14 @@
 The folder structure is as follows: 
 
 .
-└── Q2/
+└── mininet_migration/
+    ├── mininet_variants/
+    │   ├── linear_switch_bandwidth.py  (Q3 part g)
+    │   ├── linear_switch_delay.py      (Q3 part h)
+    │   ├── linear_switch_hops.py       (Q3 part j)
+    │   ├── linear_switch_loss.py       (Q3 part i)
+    │   └── single_switch_diff_file.py  (Q3 part e)
+    │   └── single_switch_same_file.py  (Q3 part f)
     ├── novels/
     │   ├── Heartsease.txt
     │   ├── Roget’s Thesaurus.txt
@@ -15,12 +22,10 @@ The folder structure is as follows:
     │   └── udp/
     │       └── udpfiles
     ├── tcp_fork/
-    │   ├── client_run.sh
     │   ├── tcp_client_non_persistent.py.py
     │   ├── tcp_client_persistent.py.py
     │   └── tcp_server.py
     ├── tcp_thread/
-    │   ├── client_run.sh
     │   ├── tcp_client_non_persistent.py.py
     │   ├── tcp_client_persistent.py.py
     │   └── tcp_server.py
@@ -29,10 +34,9 @@ The folder structure is as follows:
 
 
 
-To run the TCP server, go to the tcp folder and run the command python3 tcp_server.py
+All the code for this is in the directory, mininet_variants: 
 
-To run all the clients concurrently, run the script client_run.sh, use the command "sudo sh ./client_run.sh" to run the client. 
+To run any part just type the command  "sudo python3 [file_name in mininet_variants directory]" 
 
-Otherwise, just as previous instructions, run any python file and provide the input as required. 
 
 
